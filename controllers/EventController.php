@@ -18,11 +18,33 @@ class EventController extends Controller {
         }
     }
     function show(){
-        $show=$this -> model("event");
-        $result=$show->showevent();
-        $this->view("showEvent",$result);
-    }
-    
-    
+          $search=$this->model("event");
+          $eventinfo=$search->showevent();
+          $allEventID=$search->findAllEventID();
+          $data=array();
+           foreach($allEventID as $a=>$b){
+              foreach($b as $k=>$eventID){
+                 $result=$search->countSignup($eventID);
+                 $limit=$search->searchEventlimit($eventID);
+                 if(($result/$limit)==1){
+                    $showLimit="Full";
+                 }else{
+                 $showLimit="$result/$limit";
+                 }
+                 array_push($data,$showLimit);
+              }
+           }
+             $test=array($eventinfo,$data);
+             $this->view("showEvent",$test);
+
+        }
+        
+    function limit(){
+        }
+        
+    function showAllemployee(){
+        $search=$this->model("event");
+        $search->searchAllemployee();
+    }    
 }
 ?>

@@ -3,6 +3,7 @@ class event{
     
     public function __construct(){
             Server::setConnect();
+            Server::pdoConnect();
         }
     
     function insertEvent($eventName,$eventStarttime,$eventEndtime,$peopleNum,$withParner){
@@ -47,7 +48,14 @@ class event{
         $u_id=$_SESSION['u_id'];
         $check="SELECT `employee` FROM `eventsPeople` WHERE `employee_id`='$u_id'AND`eventID`='$eventID'";
         $ans=Server::$mysqli->query($check)->fetch_row();
-        if($ans!==null){
+        
+        
+        $count=$this->countSignup($eventID);
+        $limit=$this->searchEventlimit($eventID);
+        if(($count/$limit)==1){
+            return "People Full";
+        }else{
+            if($ans!==null){
              return "You are Joined";
             
             
@@ -59,11 +67,47 @@ class event{
                  return "Error";
              }
         }
+            
+        }
     }
     
-    function countSignup(){
-        $sql="SELECT * FROM  `eventsPeople` WHERE eventID =3";
+    function findAllEventID(){
+        $sql="SELECT  `eventID` FROM `eventsLog`";
+        $ans=Server::$mysqli->query($sql)->fetch_all();
+        if($ans){
+            return $ans;
+        }else{
+            return "Error";
+        }
+    }
+    
+    
+    function countSignup($eventID){
+        $sql="SELECT COUNT(`employee`) FROM  `eventsPeople` WHERE eventID ='$eventID'";
+        $ans=Server::$mysqli->query($sql)->fetch_row();
+        if($ans){
+            return $ans[0];
+        }else{
+            return "Error";
+        }
     }//查報名人數
+    
+    function searchEventlimit($eventID){
+        $sql="SELECT `peopleNum` FROM `eventsLog` WHERE `eventID`='$eventID'";
+        $ans=Server::$mysqli->query($sql)->fetch_row();
+        if($ans){
+            return $ans[0];
+        }else{
+            return "Error";
+        }
+    }
+    
+    function searchAllemployee(){
+        $sql="SELECT `account` FROM  `UserData` ";
+        $all=Server::$db->query($sql);
+        $ans=$all->fetchAll(PDO::FETCH_ASSOC);
+        return $ans;
+    }
     
 }
 ?>

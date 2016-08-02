@@ -5,8 +5,9 @@ class SignupController extends Controller {
         $find=$this->model("event");
         $info=$find->findEventInfo($url);
         $this->view("showSignupView",$info);
-        if($info[3]){
-        $this->view("echoParnerInput");
+        if($info[3]){//如果可攜伴
+        $limitNum=3;
+        $this->view("echoParnerInput",$limitNum);
         }
         
     }//載入活動參加頁面

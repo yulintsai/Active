@@ -96,7 +96,7 @@ class LoginController extends Controller {
             $logout = $this->model("Login");
             $msg=$logout->logout();
             $this->view("alertMsg",$msg);
-            header("Refresh:0;Location");
+            header("Refresh:0;/Active");
     }     //登出
     
 }
