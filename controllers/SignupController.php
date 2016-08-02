@@ -7,16 +7,17 @@ class SignupController extends Controller {
         $this->view("showSignupView",$info);
         if($info[3]){//如果可攜伴
         $limitNum=3;
-        $this->view("echoParnerInput",$limitNum);
+        $this->view("showParnerInput",$limitNum);
         }
-        
+        $this->view("echoform");
     }//載入活動參加頁面
     
     function act(){
         if($_POST){
             $eventID=$_POST['eventID'];
+            $parnerNum=$_POST['parnerNum'];
             $go=$this->model("event");   
-            $msg=$go->signup($eventID);
+            $msg=$go->signup($eventID,$parnerNum);
             $this->view("alertMsg",$msg);
             header("Refresh:0;/Active/");
         }

@@ -43,16 +43,17 @@ class event{
     
     function searchEventNum($url){}
     
-    function signup($eventID){
+    function signup($eventID,$parnerNum){
         $user_id=$_SESSION['user_id'];
         $u_id=$_SESSION['u_id'];
         $check="SELECT `employee` FROM `eventsPeople` WHERE `employee_id`='$u_id'AND`eventID`='$eventID'";
         $ans=Server::$mysqli->query($check)->fetch_row();
         
-        
+        $ReadytoSignupNum=$parnerNum+1;
         $count=$this->countSignup($eventID);
         $limit=$this->searchEventlimit($eventID);
-        if(($count/$limit)==1){
+        $elseNum=$limit-$count;
+        if(($count/$limit)==1||($ReadytoSignupNum>$elseNum)){
             return "People Full";
         }else{
             if($ans!==null){
@@ -60,7 +61,7 @@ class event{
             
             
         }else{
-          $sql="INSERT INTO `eventsPeople`(`employee`,`employee_id`,`eventID`) VALUES ('$user_id','$u_id','$eventID')";
+          $sql="INSERT INTO `eventsPeople`(`employee`,`employee_id`,`eventID`,`withPeople`) VALUES ('$user_id','$u_id','$eventID','$parnerNum')";
              if(Server::$mysqli->query($sql)){
                  return "Success Join Events";
              }else{
@@ -69,6 +70,8 @@ class event{
         }
             
         }
+    
+        
     }
     
     function findAllEventID(){
@@ -83,10 +86,10 @@ class event{
     
     
     function countSignup($eventID){
-        $sql="SELECT COUNT(`employee`) FROM  `eventsPeople` WHERE eventID ='$eventID'";
+        $sql="SELECT COUNT(`employee`) ,SUM(`withPeople`)  FROM  `eventsPeople` WHERE `eventID` ='$eventID'";
         $ans=Server::$mysqli->query($sql)->fetch_row();
         if($ans){
-            return $ans[0];
+            return $ans[0]+$ans[1];//員工報名人數+攜伴人數
         }else{
             return "Error";
         }

@@ -1,5 +1,5 @@
 
-攜伴：<select name="YourLocation">
+攜伴：<select name='parnerNum'>
     <?php 
     $data++;
     for($i=0;$i<$data;$i++){

@@ -9,6 +9,6 @@
             員工姓名：<?php echo $data[5]?><br>
             
          
-            <input type="submit" value="參加"/>
-        </form>
+            
+        
         
