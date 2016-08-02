@@ -23,10 +23,20 @@
             //alert("你按下取消");
             }
        })      
-    
-        //$('#eventStarttime,#eventEndtime').val(new Date().toDateInputValue());
-              
-       // $('#tst').click(function(){
-       // document.location.href="/Active/Event/show";
-       // });
+   
+       $('.dt').datetimebox({
+          formatter:function(date){
+              var y=date.getFullYear();
+              var m=date.getMonth()+1;
+              var d=date.getDate();
+              var H=date.getHours();
+              var min=date.getMinutes();
+              return y+'-'+(m<10?('0'+m):m)+'-'+(d<10?('0'+d):d)+' '+H+':'+min+':00';        
+              },
+            parser:function(s){
+              var t=Date.parse(s);
+              if (!isNaN(t)) {return new Date(t);}
+              else {return new Date();}
+              }      
+       });
     });

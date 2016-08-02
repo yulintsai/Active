@@ -4,17 +4,24 @@ class EventController extends Controller {
     function create(){
         
         if($_POST){
+            
             $eventName =$_POST['eventName'];
             $eventStarttime =$_POST['eventStarttime'];
             $eventEndtime =$_POST['eventEndtime'];
             $peopleNum =$_POST['peopleNum'];
             $withParner=$_POST['withParner'];
-            $data=$this->model("dataFilter");
-            $eventName=&$data->test_input($eventName);//資料過濾
-            $go = $this->model("event");
-            $msg=$go->insertEvent($eventName,$eventStarttime,$eventEndtime,$peopleNum,$withParner);
-            $this->view("alertMsg",$msg);
-            header("Refresh:0;/Active/");
+            
+            if($eventName==""||$eventStarttime==""||$eventEndtime==""||$peopleNum==""){
+                $this->view("alertMsg","some input empty");
+                header("Refresh:0;/Active/");
+            }else{
+                $data=$this->model("dataFilter");
+                $eventName=&$data->test_input($eventName);//資料過濾
+                $go = $this->model("event");
+                $msg=$go->insertEvent($eventName,$eventStarttime,$eventEndtime,$peopleNum,$withParner);
+                $this->view("alertMsg",$msg);
+                header("Refresh:0;/Active/");
+            }
         }
     }
     function show(){
@@ -44,7 +51,8 @@ class EventController extends Controller {
         
     function showAllemployee(){
         $search=$this->model("event");
-        $search->searchAllemployee();
-    }    
+        $result=$search->searchAllemployee();
+        $this->view("foreachEmployee",$result);
+    }//選擇誰能參加    
 }
 ?>

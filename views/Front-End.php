@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html>
     <head>
+        <title>前台</title>
          <?php 
         $this->js('jquery-3.0.0');
         $this->js('0731');
