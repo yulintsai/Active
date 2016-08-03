@@ -7,7 +7,7 @@ class LoginController extends Controller {
         if(!isset($_SESSION['status'])){
         $this->view("index2");
         }else{
-        $this->view("index");
+        $this->view("chooseView");
         // $this->view("Front-End");    
         }
     }      //首頁的頁面
@@ -31,7 +31,7 @@ class LoginController extends Controller {
         $login= $this->model("Login");
         $Errmsg=$login->CheckLogin($account,$password,$ip);
         $this->view("alertMsg",$Errmsg);
-        header("Refresh:0;/Active/");
+        header("Refresh:0;/Active");
         
         }else{
             
@@ -99,5 +99,15 @@ class LoginController extends Controller {
             header("Refresh:0;/Active");
     }     //登出
     
+    function gotoW($v){
+        if($v=="b"){
+            $this->view("Front-End"); 
+            
+        }else{
+        $this->view("index"); 
+    }
+    
+}
+
 }
 ?>

@@ -2,12 +2,12 @@
     
     
     $(document).ready(function(){
-            
-       function ShowOnlinePlayers(){
-              $.ajax({url:'/Active/Event/show',type:'POST',async: true,success:function(data){$('#Event_box').html(data);}});
-              var t=setTimeout(ShowOnlinePlayers,10000);
-          };      
-              ShowOnlinePlayers();
+            $.ajax({url:'/Active/Event/show',type:'POST',success:function(data){$('#Event_box').html(data);}});
+    //   function ShowOnlinePlayers(){
+    //           $.ajax({url:'/Active/Event/show',type:'POST',success:function(data){$('#Event_box').html(data);}});
+    //           var t=setTimeout(ShowOnlinePlayers,10000);
+    //       };      
+    //           ShowOnlinePlayers();
               
                /*------------------------登出事件--------------------------*/      
       $('#logout').click(function() { //登出事件

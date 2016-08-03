@@ -29,7 +29,12 @@
     </head>
     <body>
         <h1>後台</h1>
-        <form action="/Active/Event/create" method="post">
+        <form action="/Active/Event/create" method="post" style="
+    position: absolute;
+    top: 25%;
+    background: antiquewhite;
+    border: rgba(127, 90, 59, 0.52) 10px solid;
+">
             活動名稱：<input type="text" name="eventName"/><br>
             可報名日期：<input class="dt" type="text" name="eventStarttime"><br>
             報名截止日：<input class="dt" type="text" name="eventEndtime"><br>

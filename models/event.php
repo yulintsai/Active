@@ -7,6 +7,10 @@ class event{
         }
     
     function insertEvent($eventName,$eventStarttime,$eventEndtime,$peopleNum,$withParner){
+         if($eventStarttime>$eventEndtime){
+             return "Set Time Error";
+         }else{
+         
          $t=time();
          $t.=$a=rand(1,2000);
          $url=md5($t);
@@ -15,14 +19,25 @@ class event{
          $insertTime=date('Y-m-d H:i:s');
          $sql="INSERT INTO `eventsLog`(`insertTime`,`u_id`,`user_name`,`Name`, `Starttime`, `Endtime`, `peopleNum`,`withParner`,`url`) VALUES ('$insertTime','$u_id','$user_id','$eventName','$eventStarttime','$eventEndtime','$peopleNum','$withParner','$url')";
          if(Server::$mysqli->query($sql)){
-             return "Success Create Events";
+             
+             $sql2="SELECT `eventID` FROM  `eventsLog` WHERE `Name`='$eventName'";
+             if($eventID=Server::$mysqli->query($sql2)){
+                $c_eventID=$eventID->fetch_assoc();
+                $ans=array('msg'=>"Success Create Event",'eventID'=>$c_eventID['eventID']);
+                 return $ans;
+             }else{
+                 return "Error Find eventID";
+             }
+             
+            //  return "Success Create Events";
          }else{
              return "Error";
          }
+         }
     }
     
-    function showevent(){
-        $sql="SELECT * FROM  `eventsLog` ";
+    function showevent($eventID){
+        $sql="SELECT * FROM  `eventsLog` WHERE `eventID`='$eventID'";
         $result=Server::$mysqli->query($sql)->fetch_all();
         return $result;
     }
@@ -53,7 +68,10 @@ class event{
         $count=$this->countSignup($eventID);
         $limit=$this->searchEventlimit($eventID);
         $elseNum=$limit-$count;
-        if(($count/$limit)==1||($ReadytoSignupNum>$elseNum)){
+        
+        
+        
+        if(($count/$limit)==1||($ReadytoSignupNum>$elseNum)){//判斷是否超出人數
             return "People Full";
         }else{
             if($ans!==null){
@@ -75,7 +93,8 @@ class event{
     }
     
     function findAllEventID(){
-        $sql="SELECT  `eventID` FROM `eventsLog`";
+        $u_id=$_SESSION['u_id'];
+        $sql="SELECT  `eventID` FROM `eventAuthority` WHERE `u_id`='$u_id'";
         $ans=Server::$mysqli->query($sql)->fetch_all();
         if($ans){
             return $ans;
@@ -83,7 +102,6 @@ class event{
             return "Error";
         }
     }
-    
     
     function countSignup($eventID){
         $sql="SELECT COUNT(`employee`) ,SUM(`withPeople`)  FROM  `eventsPeople` WHERE `eventID` ='$eventID'";
@@ -111,6 +129,17 @@ class event{
         $ans=$all->fetchAll(PDO::FETCH_ASSOC);
         return $ans;
     }
+    
+    function searchEventDate($url){
+        $sql="SELECT `Starttime`,`Endtime` FROM  `eventsLog` WHERE `url`='$url'";
+        $ans=Server::$mysqli->query($sql)->fetch_row();
+        if($ans){
+            return $ans;
+        }else{
+            return "Error";
+        }
+    }
+    
     
 }
 ?>

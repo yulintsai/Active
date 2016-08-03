@@ -18,19 +18,22 @@ class EventController extends Controller {
                 $data=$this->model("dataFilter");
                 $eventName=&$data->test_input($eventName);//資料過濾
                 $go = $this->model("event");
-                $msg=$go->insertEvent($eventName,$eventStarttime,$eventEndtime,$peopleNum,$withParner);
-                $this->view("alertMsg",$msg);
-                header("Refresh:0;/Active/");
+                $result=$go->insertEvent($eventName,$eventStarttime,$eventEndtime,$peopleNum,$withParner);
+                $this->view("alertMsg",$result['msg']);
+                $this->showAllemployee($result['eventID']);
+                //header("Refresh:0;/Active/");
             }
         }
     }
     function show(){
           $search=$this->model("event");
-          $eventinfo=$search->showevent();
-          $allEventID=$search->findAllEventID();
-          $data=array();
+          
+          $allEventID=$search->findAllEventID();//尋找該ID可參加的全部活動
+          $data=array();//查詢即時報名的數據
+          $eventinfo=array();
            foreach($allEventID as $a=>$b){
               foreach($b as $k=>$eventID){
+                 array_push($eventinfo,$search->showevent($eventID));
                  $result=$search->countSignup($eventID);
                  $limit=$search->searchEventlimit($eventID);
                  if(($result/$limit)==1){
@@ -44,15 +47,15 @@ class EventController extends Controller {
              $test=array($eventinfo,$data);
              $this->view("showEvent",$test);
 
-        }
-        
+    }
     function limit(){
         }
         
-    function showAllemployee(){
+    function showAllemployee($eventID){
         $search=$this->model("event");
         $result=$search->searchAllemployee();
-        $this->view("foreachEmployee",$result);
+        $ans=array($result,$eventID);
+        $this->view("foreachEmployee",$ans);
     }//選擇誰能參加    
 }
 ?>
