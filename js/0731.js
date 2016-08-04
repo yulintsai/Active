@@ -5,7 +5,7 @@
             $.ajax({url:'/Active/Event/show',type:'POST',success:function(data){$('#Event_box').html(data);}});
     //   function ShowOnlinePlayers(){
     //           $.ajax({url:'/Active/Event/show',type:'POST',success:function(data){$('#Event_box').html(data);}});
-    //           var t=setTimeout(ShowOnlinePlayers,10000);
+    //           var t=setTimeout(ShowOnlinePlayers,1000);
     //       };      
     //           ShowOnlinePlayers();
               

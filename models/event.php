@@ -6,33 +6,34 @@ class event{
             Server::pdoConnect();
         }
     
-    function insertEvent($eventName,$eventStarttime,$eventEndtime,$peopleNum,$withParner){
+    function insertEvent($eventName,$eventTime,$eventStarttime,$eventEndtime,$peopleNum,$withParner){
+        
          if($eventStarttime>$eventEndtime){
              return "Set Time Error";
          }else{
-         
-         $t=time();
-         $t.=$a=rand(1,2000);
-         $url=md5($t);
-         $u_id=$_SESSION['u_id'];
-         $user_id=$_SESSION['user_id'];
-         $insertTime=date('Y-m-d H:i:s');
-         $sql="INSERT INTO `eventsLog`(`insertTime`,`u_id`,`user_name`,`Name`, `Starttime`, `Endtime`, `peopleNum`,`withParner`,`url`) VALUES ('$insertTime','$u_id','$user_id','$eventName','$eventStarttime','$eventEndtime','$peopleNum','$withParner','$url')";
-         if(Server::$mysqli->query($sql)){
-             
-             $sql2="SELECT `eventID` FROM  `eventsLog` WHERE `Name`='$eventName'";
-             if($eventID=Server::$mysqli->query($sql2)){
-                $c_eventID=$eventID->fetch_assoc();
-                $ans=array('msg'=>"Success Create Event",'eventID'=>$c_eventID['eventID']);
-                 return $ans;
+            
+             $t=time();
+             $t.=$a=rand(1,2000);
+             $url=md5($t);
+             $u_id=$_SESSION['u_id'];
+             $user_id=$_SESSION['user_id'];
+             $insertTime=date('Y-m-d H:i:s');
+             $sql="INSERT INTO `eventsLog`(`insertTime`,`u_id`,`user_name`,`Name`, `eventTime`,`Starttime`, `Endtime`, `peopleNum`,`withParner`,`url`) VALUES ('$insertTime','$u_id','$user_id','$eventName','$eventTime','$eventStarttime','$eventEndtime','$peopleNum','$withParner','$url')";
+             if(Server::$mysqli->query($sql)){
+                 
+                 $sql2="SELECT `eventID` FROM  `eventsLog` WHERE `Name`='$eventName'";
+                 if($eventID=Server::$mysqli->query($sql2)){
+                    $c_eventID=$eventID->fetch_assoc();
+                    $ErrorMsg="Success Create Event\\nPlease Set Authority";
+                    $ans=array('msg'=>"$ErrorMsg",'eventID'=>$c_eventID['eventID']);
+                    return $ans;
+                 }else{
+                     return "Error Find eventID";
+                 }
+                 
              }else{
-                 return "Error Find eventID";
+                 return "Error";
              }
-             
-            //  return "Success Create Events";
-         }else{
-             return "Error";
-         }
          }
     }
     
@@ -56,7 +57,7 @@ class event{
          return $result;
     }
     
-    function searchEventNum($url){}
+    // function searchEventNum($url){}
     
     function signup($eventID,$parnerNum){
         $user_id=$_SESSION['user_id'];
@@ -94,7 +95,7 @@ class event{
     
     function findAllEventID(){
         $u_id=$_SESSION['u_id'];
-        $sql="SELECT  `eventID` FROM `eventAuthority` WHERE `u_id`='$u_id'";
+        $sql="SELECT  `eventID` FROM `eventAuthority` WHERE `u_id`='$u_id' ORDER BY `eventID`";
         $ans=Server::$mysqli->query($sql)->fetch_all();
         if($ans){
             return $ans;

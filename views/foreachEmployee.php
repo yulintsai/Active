@@ -12,7 +12,7 @@ foreach($data[0] as $k=>$v){
   echo "<tr></tr>";}
   $a++;
   $empName=$v['account'];
-  echo "<td><input type='checkbox' name='$a' value='$empName'>$empName</td>";
+  echo "<td><input type='checkbox' checked='true' name='$a' value='$empName'>$empName</td>";
     
 }
 echo "</table>";

@@ -4,14 +4,11 @@ class SignupController extends Controller {
     function actform($url){
         
         $now=time();
-        
-        //echo $now;
         $find=$this->model("event");
-        
         $Date=$find->searchEventDate($url);
         $Date1=strtotime($Date[0]);
         $Date2=strtotime($Date[1]);
-        if(($Date1<$now)&&($now<$Date2)){//如果報名時間到
+        if(($Date1<$now)&&($now<$Date2)){//沒在報名期間不能進入報名
             $info=$find->findEventInfo($url);
             $this->view("showSignupView",$info);
             if($info[3]){//如果可攜伴
@@ -20,7 +17,7 @@ class SignupController extends Controller {
             }
             $this->view("echoform");
         }else{
-             $this->view("alertMsg","TIME OUT");//如果時間還沒到
+             $this->view("alertMsg","TIME OUT");
              header("Refresh:0;/Active/Login/gotoW/b");
         }
         

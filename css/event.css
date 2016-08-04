@@ -1,0 +1,28 @@
+        body{
+            font-family:Microsoft JhengHei;
+            font-weight:bold;
+        }
+
+/*#Event_box {*/
+/*            position: absolute;*/
+/*            top: 25%;*/
+/*            left: 34%;*/
+/*        }*/
+        #eventinfo{
+            color: rgba(150, 0, 0, 0.78);
+            background: rgba(198, 255, 59, 0.57);
+            text-align:center;
+            border:white 5px solid;
+            border-radius:5px;
+        }
+        td{
+            border:white 2px groove;
+            border-radius:5px;
+        }
+        form{
+            /*position: absolute;*/
+            /*top: 25%;*/
+            width:250px;
+            background: antiquewhite;
+            border: rgba(127, 90, 59, 0.52) 10px solid;
+        }
