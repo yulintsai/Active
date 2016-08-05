@@ -11,7 +11,7 @@ class SignupController extends Controller {
         if(($Date1<$now)&&($now<$Date2)){//沒在報名期間不能進入報名
             $info=$find->findEventInfo($url);
             $this->view("showSignupView",$info);
-            if($info[3]){//如果可攜伴
+            if($info['withParner']){//如果可攜伴
                 $limitNum=3;
                 $this->view("showParnerInput",$limitNum);
             }
@@ -35,17 +35,25 @@ class SignupController extends Controller {
         
     }//參加作業
     
-    function act_authority($empSum){
-        if($_POST){
-            for($a=1;$a<$empSum;$a++){
-                if($_POST["$a"]){
+    function act_authority(){
+        
+        if($_POST['eventAuthority']){
+        $result=($_POST['eventAuthority']);
+            foreach($result as $empID){
                 $eventID=$_POST['eventID'];
                 $goset=$this->model("authority");
-                $msg=$goset->setAuthority($a,$eventID);
-                $this->view("alertMsg",$msg);
-                header("Refresh:0;/Active/Login/gotoW/a");
+                $msg=$goset->setAuthority($empID,$eventID);
+                if($msg==false){
+                    $this->view("alertMsg","ERROR");
+                    header("Refresh:0;/Active/Login/gotoW/a");
+                }else{
+                    header("Refresh:0;/Active/Login/gotoW/a");
                 }
             }
+ 
+        }else{
+            $this->view("alertMsg","ERROR");
+            header("Refresh:0;/Active/Login/gotoW/a");
         }
     }
     

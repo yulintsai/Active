@@ -9,11 +9,7 @@ class authority{
     function setAuthority($emp_id,$eventID){
         $sql="INSERT INTO `eventAuthority`(`u_id`, `eventID`) VALUES ('$emp_id','$eventID')";
         $ans=Server::$mysqli->query($sql);
-        if($ans){
-            return "setAuthority SUCCESS";
-        }else{
-            return "Error";
-        }
+        return $ans;
     }
     
 }

@@ -2,17 +2,19 @@
 class InfoController extends Controller {
     
    function nowEvent(){
-      $search=$this->model("event");
-      $allEventID=$search->findAllEventID();
-      $data=array();
-       foreach($allEventID as $a=>$b){
-          foreach($b as $k=>$eventID){
-             $result=$search->countSignup($eventID);
-             $limit=$search->searchEventlimit($eventID);
-             array_push($data,"$result/$limit<br>");
-          }
-       }
-         //$this->view("showEventInfo",$data);
+        $search=$this->model("event");
+        $Info=$search->eventInfo();
+        //var_dump($Info);
+        echo "<table>";
+        foreach ($Info as $row) {
+            echo "<tr>";
+            foreach($row as $value){
+            echo "<td>".$value."</td>";
+            }
+             echo "</tr>";
+        }
+        echo "</table>";
+        // $this->view("showForeach",$Info);
    }
    
 }

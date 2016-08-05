@@ -45,7 +45,7 @@ class LoginController extends Controller {
         $gotosn = $this->model("player");
         $ans=$gotosn->GoSignup();
         $this->view("showOnedata",$ans);
-        header("Refresh:0;/EasyMVC/");
+        header("Refresh:0;/Active/");
         
     }    //進行註冊
     
@@ -64,10 +64,10 @@ class LoginController extends Controller {
         $edit=$this->model("edit");
         $msg=$edit->edit();
         $this->view("alertMsg",$msg);
-        header("Refresh:0;/EasyMVC/");
+        header("Refresh:0;/Active/");
         }
         $this->view("alertMsg",$ErrorMsg);
-        header("Refresh:0;/EasyMVC/");
+        header("Refresh:0;/Active/");
         }
     }      //進行編輯
     
@@ -105,8 +105,10 @@ class LoginController extends Controller {
             
         }else{
         $this->view("index"); 
-    }
-    
+    }  
+       
+        //beginTransaction
+        // for update
 }
 
 }
