@@ -27,7 +27,9 @@ class LoginController extends Controller {
         
         $find=$this->model("data");
         $ip=$find->getIP();
-        
+        $test=$this->model("dataFilter");
+        $account=$test->test_input($account);//資料過濾
+        $password=$test->test_input($password);
         $login= $this->model("Login");
         $Errmsg=$login->CheckLogin($account,$password,$ip);
         $this->view("alertMsg",$Errmsg);

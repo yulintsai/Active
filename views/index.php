@@ -18,7 +18,7 @@
 
 <body>
     <h1>後台</h1>
-    <form action="/Active/Event/create" method="post">
+    <form id="createForm" action="/Active/Event/create" method="post">
         活動名稱：<input type="text" name="eventName" /><br> 
         活動日期：<input class="dt"  min="2016-08-04 00:00:00"name="eventTime"><br> 
         報名日期：<input class="dt"  name="eventStarttime"><br> 

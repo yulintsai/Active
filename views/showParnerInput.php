@@ -1,5 +1,6 @@
 
-攜伴：<select name='parnerNum'>
+<table>
+<tr><td>攜伴</td><td><select name='parnerNum'>
     <?php 
     $data++;
     for($i=0;$i<$data;$i++){
@@ -11,3 +12,6 @@
     }
 　?>
 </select>
+</td>
+</tr>
+</table>

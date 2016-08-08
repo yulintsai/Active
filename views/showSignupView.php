@@ -1,4 +1,4 @@
-           
+           <?php $this->css("event");?>
 <table>
  <tr>
   <td>活動ID</td><td><?php echo $data['eventID']?></td>
