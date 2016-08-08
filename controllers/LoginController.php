@@ -108,9 +108,6 @@ class LoginController extends Controller {
         }else{
         $this->view("index"); 
     }  
-       
-        //beginTransaction
-        // for update
 }
 
 }
