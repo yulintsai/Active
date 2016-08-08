@@ -1,17 +1,17 @@
 <?php
     class dataFilter{
-        function __construct(){
+        public function __construct(){
             Server::setConnect();
         }
         
-        function test_input($data = Array()) {
+        public function test_input($data = Array()) {
           $data = trim($data);
           $data = stripslashes($data);
           $data = htmlspecialchars($data);
           $data = Server::$mysqli->real_escape_string($data);
           return $data;
         } //過濾Input
-         function checkDatetime($date_time){
+         public function checkDatetime($date_time){
             $check = false;
             if (strtotime($date_time)){
             //不管檢查時間或日期格式，都只取第一個陣列值

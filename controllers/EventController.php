@@ -1,7 +1,7 @@
 <?php
 class EventController extends Controller {
     
-    function create(){
+    public function create(){
         
         if($_POST){
             define("HOME","Refresh:0;/Active/Login/gotoW/a");
@@ -13,16 +13,20 @@ class EventController extends Controller {
             $peopleNum =$_POST['peopleNum'];
             $withParner=$_POST['withParner'];
             $check=$this->model("dataFilter");
+           
             if(($check->checkDatetime($eventTime))==""||($check->checkDatetime($eventStarttime))==""||($check->checkDatetime($eventEndtime))=="")
             {
                 $this->view("alertMsg","Datetime Error");
-                header("HOME");
+                header(HOME);
             }
             if(!is_numeric($peopleNum))//判斷是否為數字或數字字串
             $this->view("alertMsg","$peopleNum Not interger");
             if($eventName==""||$eventTime==""||$eventStarttime==""||$eventEndtime==""||$peopleNum==""){
                 $this->view("alertMsg","some input empty");
-                header("HOME");
+                header(HOME);
+            }elseif(!is_bool($withParner)) {
+                $this->view("alertMsg","攜伴值無法通過驗證");
+                header(HOME);
             }else{
                 $data=$this->model("dataFilter");
                 $eventName=&$data->test_input($eventName);//資料過濾
@@ -31,7 +35,7 @@ class EventController extends Controller {
                 
                 if($result=="Set Time Error"){//判斷時間是否正確
                     $this->view("alertMsg",$result);
-                    header("HOME");
+                    header(HOME);
                 }else{
                     $this->view("alertMsg",$result['msg']);
                     $this->showAllemployee($result['eventID']);
@@ -39,7 +43,7 @@ class EventController extends Controller {
             }
         }
     }
-    function show(){
+    public function show(){
           $search=$this->model("event");
           $allEventID=$search->findAllEventID();//尋找該員工可參加的全部活動
           $data=array();//查詢即時報名的數據
@@ -50,7 +54,7 @@ class EventController extends Controller {
                  array_push($eventinfo,$search->showevent($eventID));
                  $result=$search->countSignup($eventID);
                  $limit=$search->searchEventlimit($eventID);
-                 if(($result/$limit)==1){
+                 if(($result/$limit)>=1){
                     $showLimit="FULL";
                  }else{
                  $showLimit="$result/$limit";
@@ -64,7 +68,7 @@ class EventController extends Controller {
             
     }
 
-    function showAllemployee($eventID){
+    public function showAllemployee($eventID){
         
             if($eventID){
             $search=$this->model("event");

@@ -1,7 +1,7 @@
 <?php
 class InfoController extends Controller {
     
-   function nowEvent(){
+    public function nowEvent(){
         $search=$this->model("event");
         $Info=$search->eventInfo();
         //var_dump($Info);

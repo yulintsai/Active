@@ -1,7 +1,7 @@
 <?php
 class SignupController extends Controller {
     
-    function actform($url){
+    public function actform($url){
         
         $now=time();
         $find=$this->model("event");
@@ -23,7 +23,7 @@ class SignupController extends Controller {
         
     }//載入活動參加頁面
     
-    function act(){
+    public function act(){
         if($_POST){
             $eventID=$_POST['eventID'];
             $parnerNum=$_POST['parnerNum'];
@@ -35,7 +35,7 @@ class SignupController extends Controller {
         
     }//參加作業
     
-    function act_authority(){
+    public function act_authority(){
         
         if($_POST['eventAuthority']){
         $result=($_POST['eventAuthority']);

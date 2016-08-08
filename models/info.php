@@ -6,7 +6,7 @@ class info{
             Server::pdoConnect();
         }
     
-    function checkAuthority(){
+    public function checkAuthority(){
         $sql="SELECT  `eventID` FROM `eventAuthority` WHERE `u_id`='$u_id' ORDER BY `eventID`";
         $ans=Server::$mysqli->query($sql)->fetch_all();
         if($ans){

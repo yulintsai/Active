@@ -7,7 +7,7 @@ class event{
             Server::pdo2Connect();
         }
     
-    function insertEvent($eventName,$eventTime,$eventStarttime,$eventEndtime,$peopleNum,$withParner){
+    public function insertEvent($eventName,$eventTime,$eventStarttime,$eventEndtime,$peopleNum,$withParner){
         
          if($eventStarttime>$eventEndtime){
              return "Set Time Error";
@@ -41,14 +41,14 @@ class event{
     }
     //產生活動
     
-    function showevent($eventID){
+    public function showevent($eventID){
         $sql="SELECT * FROM  `eventsLog` WHERE `eventID`='$eventID'";
         $result=Server::$mysqli->query($sql)->fetch_all();
         return $result;
     }
     //列出該活動資訊
     
-    function findUrl(){
+    public function findUrl(){
         $sql="SELECT `url` FROM  `eventsLog`";
         $result=Server::$mysqli->query($sql)->fetch_all();
         return $result;
@@ -56,7 +56,7 @@ class event{
     }
     //找該活動參加的URL
     
-    function findEventInfo($url){
+    public function findEventInfo($url){
          $sql="SELECT `name`,`user_name`,`eventID`,`withParner`,`eventTime` FROM  `eventsLog` WHERE `url`='$url'";
          $result=Server::$mysqli->query($sql)->fetch_assoc();
          array_push($result,$_SESSION['u_id'],$_SESSION['user_id']);
@@ -64,7 +64,7 @@ class event{
     }
     //找出報名資訊
     
-    function signup($eventID,$parnerNum){/*ADD報名資格判斷*/
+    public function signup($eventID,$parnerNum){/*ADD報名資格判斷*/
         $user_id=$_SESSION['user_id'];
         $u_id=$_SESSION['u_id'];
         $check="SELECT `employee` FROM `eventsPeople` WHERE `employee_id`='$u_id'AND`eventID`='$eventID'";
